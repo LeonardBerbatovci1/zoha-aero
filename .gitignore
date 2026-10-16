@@ -1,0 +1,9 @@
+# Private runtime data: login, messages, saved content, rate limits
+data/*
+!data/.htaccess
+
+# Local settings with the setup code (use cms/config.example.php as template)
+cms/config.php
+
+# Temporary files written during publishing
+*.tmp-*

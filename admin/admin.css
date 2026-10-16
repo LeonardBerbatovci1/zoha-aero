@@ -1,0 +1,60 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("../assets/fonts/montserrat-latin.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+:root { --navy: #1f3a5f; --accent: #2e9cd8; --line: #dfe4ea; --muted: #5a6675; --bg: #f3f5f8; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 15px/1.55 "Montserrat", system-ui, sans-serif; color: #1f2a37; background: var(--bg); }
+a { color: #1b7bb3; }
+h1, h2 { color: var(--navy); margin: 0 0 16px; line-height: 1.25; }
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
+code { background: #e8edf3; padding: 1px 6px; border-radius: 4px; }
+
+.top { background: var(--navy); color: #fff; }
+.top-inner { max-width: 920px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+.top-links { display: flex; align-items: center; gap: 18px; }
+.top-links a, .top .link { color: #fff; }
+.top form { margin: 0; }
+
+.main { max-width: 920px; margin: 0 auto; padding: 24px 16px 80px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 24px 20px; margin-bottom: 18px; }
+.narrow { max-width: 440px; margin: 40px auto; }
+
+.tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 18px; border-bottom: 2px solid var(--line); }
+.tabs a { padding: 10px 16px; text-decoration: none; color: var(--muted); font-weight: 600; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+.tabs a[aria-current] { color: var(--navy); border-color: var(--accent); }
+.badge { display: inline-block; min-width: 20px; padding: 0 6px; border-radius: 10px; background: var(--accent); color: #fff; font-size: .75rem; text-align: center; }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-weight: 600; color: var(--navy); margin-bottom: 4px; font-size: .9rem; }
+.field small { display: block; color: var(--muted); font-size: .8rem; margin: -2px 0 6px; font-weight: 400; }
+.field input, .field textarea { width: 100%; font: inherit; padding: 10px 12px; border: 1px solid #c3ccd6; border-radius: 7px; background: #fff; }
+.field input:focus, .field textarea:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
+.field textarea { resize: vertical; }
+fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px 2px; margin: 0 0 14px; }
+legend { font-weight: 700; color: var(--muted); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; padding: 0 6px; }
+.grid2 { display: grid; gap: 0 16px; }
+@media (min-width: 700px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+.hint { color: var(--muted); font-size: .88rem; }
+
+.btn { display: inline-block; background: var(--accent); color: #fff; border: 0; border-radius: 7px; padding: 11px 22px; font: inherit; font-weight: 600; cursor: pointer; text-decoration: none; }
+.btn:hover { background: var(--navy); }
+.btn--small { padding: 6px 14px; font-size: .88rem; }
+.link { background: none; border: 0; padding: 0; font: inherit; color: #1b7bb3; text-decoration: underline; cursor: pointer; }
+.danger { color: #b42318; }
+
+.actions { position: sticky; bottom: 0; background: rgba(243,245,248,.95); padding: 14px 0; border-top: 1px solid var(--line); }
+
+.flash { padding: 12px 16px; border-radius: 8px; font-weight: 600; }
+.flash--ok { background: #e6f4ec; color: #1d5e3a; }
+.flash--err { background: #fbeaea; color: #8a2020; }
+
+.msg { border-top: 1px solid var(--line); padding: 16px 0; }
+.msg header { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
+.msg time { color: var(--muted); font-size: .85rem; margin-left: auto; }
+.msg p { margin: 8px 0 12px; white-space: normal; }
+.msg form { display: flex; gap: 16px; align-items: center; margin: 0; }
