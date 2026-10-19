@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 // config.php is not in git (it holds the setup code); fall back to the example settings.
 require_once is_file(__DIR__ . '/config.php') ? __DIR__ . '/config.php' : __DIR__ . '/config.example.php';
+if (is_file(__DIR__ . '/setup-hash.php')) require_once __DIR__ . '/setup-hash.php';
 
 const SITE_ROOT = __DIR__ . '/..';
 const DATA_DIR  = SITE_ROOT . '/data';

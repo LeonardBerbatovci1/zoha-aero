@@ -75,9 +75,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'setup' && !$hasSetup) {
         $pw = (string)($_POST['password'] ?? '');
-        if (SETUP_CODE === 'change-me-before-upload') {
-            flash('err', 'Setup is disabled: change SETUP_CODE in cms/config.php first.');
-        } elseif (!hash_equals(SETUP_CODE, (string)($_POST['code'] ?? ''))) {
+        $code = (string)($_POST['code'] ?? '');
+        $codeOk = (SETUP_CODE !== 'change-me-before-upload' && hash_equals(SETUP_CODE, $code))
+               || (defined('SETUP_CODE_HASH') && password_verify($code, SETUP_CODE_HASH));
+        if (count(attempts($ipKey)) >= 5) {
+            flash('err', 'Too many attempts. Please wait 15 minutes.');
+        } elseif (!$codeOk) {
             record_attempt($ipKey);
             flash('err', 'Wrong setup code.');
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -259,7 +262,7 @@ $messages = $loggedIn ? load_messages() : [];
 <?php if (!$hasSetup): ?>
   <section class="card narrow">
     <h1>First-time setup</h1>
-    <p>Create the admin login. You need the setup code from <code>cms/config.php</code>.</p>
+    <p>Create the admin login. Enter the setup code you were given.</p>
     <form method="post">
       <input type="hidden" name="csrf" value="<?= e($_SESSION['csrf']) ?>">
       <input type="hidden" name="action" value="setup">

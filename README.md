@@ -38,8 +38,8 @@ Hosting: **Hostinger** (PHP 8.1 or newer).
 
 - `index.html`, `privacy.html`, `robots.txt`, `sitemap.xml` are **not in git**: the CMS generates them on the server.
   After a deploy, the first visit runs `index.php`, which builds them. Owner edits are never overwritten by a deploy.
-- `cms/config.php` and `data/` are **not in git** either. Create `cms/config.php` once in File Manager
-  (copy of `cms/config.example.php` with your own `SETUP_CODE`); deploys leave it untouched.
+- `data/` is **not in git**. No server file is needed for setup: `cms/setup-hash.php` holds a one-way hash of the setup code,
+  so after a deploy just open `/admin/` and enter the code. (Optional `cms/config.php` still works and is not in git.)
 - After changing the templates or styles in git, deploy, then click **Save and publish** once in the admin
   to rebuild the pages with the new templates.
 
