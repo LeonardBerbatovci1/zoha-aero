@@ -35,4 +35,6 @@ RedirectMatch 404 ^/(data|cms)/
 </IfModule>
 AddType font/woff2 .woff2
 
-ErrorDocument 404 /index.html
+# index.html is preferred; index.php builds the pages if they are missing (fresh deploy)
+DirectoryIndex index.html index.php
+ErrorDocument 404 /index.php

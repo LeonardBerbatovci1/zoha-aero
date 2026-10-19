@@ -34,6 +34,15 @@ Hosting: **Hostinger** (PHP 8.1 or newer).
 8. Send a test message through the contact form and confirm it arrives by email and in *Messages*.
 9. Check that `https://your-domain/data/content.json` and `https://your-domain/cms/config.php` show "404 / Forbidden".
 
+### Deploying from GitHub (hPanel → Advanced → Git)
+
+- `index.html`, `privacy.html`, `robots.txt`, `sitemap.xml` are **not in git**: the CMS generates them on the server.
+  After a deploy, the first visit runs `index.php`, which builds them. Owner edits are never overwritten by a deploy.
+- `cms/config.php` and `data/` are **not in git** either. Create `cms/config.php` once in File Manager
+  (copy of `cms/config.example.php` with your own `SETUP_CODE`); deploys leave it untouched.
+- After changing the templates or styles in git, deploy, then click **Save and publish** once in the admin
+  to rebuild the pages with the new templates.
+
 ## Security
 
 - Login with email + password (password stored as a secure hash); 5 wrong logins → 15-minute lockout; logout after 2 hours of inactivity.
