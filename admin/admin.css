@@ -53,8 +53,3 @@ legend { font-weight: 700; color: var(--muted); font-size: .8rem; text-transform
 .flash--ok { background: #e6f4ec; color: #1d5e3a; }
 .flash--err { background: #fbeaea; color: #8a2020; }
 
-.msg { border-top: 1px solid var(--line); padding: 16px 0; }
-.msg header { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: baseline; }
-.msg time { color: var(--muted); font-size: .85rem; margin-left: auto; }
-.msg p { margin: 8px 0 12px; white-space: normal; }
-.msg form { display: flex; gap: 16px; align-items: center; margin: 0; }

@@ -95,8 +95,7 @@ function clean_content(array $posted, array $current): array
 function validate_content(array $c): array
 {
     $errors = [];
-    foreach (['contact.email' => $c['contact']['email'], 'form.mail_to' => $c['form']['mail_to'],
-              'form.mail_from' => $c['form']['mail_from'], 'privacy.email' => $c['privacy']['email']] as $field => $email) {
+    foreach (['contact.email' => $c['contact']['email'], 'privacy.email' => $c['privacy']['email']] as $field => $email) {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors[] = "“{$email}” is not a valid email address ({$field}).";
         }
@@ -196,32 +195,3 @@ function publish(array $c): array
     return $failed;
 }
 
-// ---------- Messages from the contact form ----------
-
-function load_messages(): array
-{
-    $file = DATA_DIR . '/messages.jsonl';
-    if (!is_file($file)) return [];
-    $out = [];
-    foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        $m = json_decode($line, true);
-        if (is_array($m)) {
-            $m['id'] ??= substr(hash('sha256', $line), 0, 12);
-            $out[] = $m;
-        }
-    }
-    return array_reverse($out); // newest first
-}
-
-function delete_message(string $id): bool
-{
-    $file = DATA_DIR . '/messages.jsonl';
-    if (!is_file($file)) return false;
-    $keep = [];
-    foreach (file($file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
-        $m = json_decode($line, true);
-        $mid = $m['id'] ?? substr(hash('sha256', $line), 0, 12);
-        if ($mid !== $id) $keep[] = $line;
-    }
-    return write_file($file, $keep ? implode("\n", $keep) . "\n" : '');
-}

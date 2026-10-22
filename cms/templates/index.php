@@ -9,7 +9,6 @@ $org = [
     'logo'        => $url . '/assets/img/logo-navy.svg',
     'description' => $c['site']['description'],
     'email'       => $c['contact']['email'],
-    'telephone'   => $c['contact']['phone'],
     'address'     => [
         '@type'           => 'PostalAddress',
         'streetAddress'   => explode("\n", $c['contact']['address'])[0],
@@ -27,6 +26,7 @@ $icons = [
     $svg('<circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.3 10.9l9.4-4.8M7.3 13.1l9.4 4.8"/>'),
     $svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>'),
 ];
+if (trim($c['contact']['phone']) !== '') $org['telephone'] = $c['contact']['phone'];
 $jsonFlags =JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG;
 ?>
 <!doctype html>
@@ -210,56 +210,29 @@ $jsonFlags =JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES 
 
     <!-- 5. Contact -->
     <section class="contact" id="contact">
-      <div class="wrap">
+      <div class="wrap contact-grid">
         <div class="section-head">
           <span class="eyebrow"><?= e($c['contact']['eyebrow']) ?></span>
           <h2><?= e($c['contact']['heading']) ?></h2>
           <p><?= e($c['contact']['intro']) ?></p>
+          <a class="btn btn--on-dark" href="mailto:<?= e($c['contact']['email']) ?>">Email us <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="contact-grid">
-          <ul class="details">
-            <li>
-              <span class="details-icon" aria-hidden="true"><?= $svg('<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>') ?></span>
-              <div><span class="label">Address</span><address><?= lines($c['contact']['address']) ?></address></div>
-            </li>
-            <li>
-              <span class="details-icon" aria-hidden="true"><?= $svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>') ?></span>
-              <div><span class="label">Email</span><a href="mailto:<?= e($c['contact']['email']) ?>"><?= e($c['contact']['email']) ?></a></div>
-            </li>
-            <li>
-              <span class="details-icon" aria-hidden="true"><?= $svg('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>') ?></span>
-              <div><span class="label">Phone</span><a href="<?= e(tel_link($c['contact']['phone'])) ?>"><?= e($c['contact']['phone']) ?></a></div>
-            </li>
-          </ul>
-
-          <form class="form" action="/contact.php" method="post" id="contact-form">
-            <p class="notice notice--ok" id="form-ok" role="status" hidden><?= e($c['form']['success']) ?></p>
-            <p class="notice notice--err" id="form-err" role="alert" hidden><?= e($c['form']['error']) ?></p>
-
-            <div class="field">
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required maxlength="100">
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required maxlength="150">
-            </div>
-            <div class="field">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" required maxlength="5000"></textarea>
-            </div>
-
-            <!-- Spam protection: honeypot field (hidden from people) + time check -->
-            <div class="hp" aria-hidden="true">
-              <label for="website">Leave this field empty</label>
-              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-            </div>
-            <input type="hidden" name="ts" id="ts" value="">
-
-            <p class="form-note">We use your details only to reply to your message. See our <a href="/privacy.html">privacy notice</a>.</p>
-            <button class="btn" type="submit">Send message</button>
-          </form>
-        </div>
+        <ul class="details">
+          <li>
+            <span class="details-icon" aria-hidden="true"><?= $svg('<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>') ?></span>
+            <div><span class="label">Address</span><address><?= lines($c['contact']['address']) ?></address></div>
+          </li>
+          <li>
+            <span class="details-icon" aria-hidden="true"><?= $svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>') ?></span>
+            <div><span class="label">Email</span><a href="mailto:<?= e($c['contact']['email']) ?>"><?= e($c['contact']['email']) ?></a></div>
+          </li>
+<?php if (trim($c['contact']['phone']) !== ''): ?>
+          <li>
+            <span class="details-icon" aria-hidden="true"><?= $svg('<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>') ?></span>
+            <div><span class="label">Phone</span><a href="<?= e(tel_link($c['contact']['phone'])) ?>"><?= e($c['contact']['phone']) ?></a></div>
+          </li>
+<?php endif; ?>
+        </ul>
       </div>
     </section>
 
@@ -271,11 +244,6 @@ $jsonFlags =JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES 
     (function () {
       var y = document.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
-      var ts = document.getElementById('ts');
-      if (ts) ts.value = Math.floor(Date.now() / 1000);
-      var status = new URLSearchParams(location.search).get('status');
-      if (status === 'sent') document.getElementById('form-ok').hidden = false;
-      if (status === 'error') document.getElementById('form-err').hidden = false;
       // Mobile hamburger menu
       var burger = document.querySelector('.burger');
       var header = document.querySelector('.site-header');

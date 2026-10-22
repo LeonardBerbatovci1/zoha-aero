@@ -59,18 +59,12 @@ return [
         'intro'   => 'Tell us what you need to know. We will reply by email.',
         'address' => "Bekim Fehmiu 2\nPrishtinë, Kosovo",
         'email'   => 'info@your-domain.com',
-        'phone'   => '+383 00 000 000',
+        'phone'   => '', // optional: shown on the site only when filled in
     ],
     'company' => [
         'name'    => 'Zoha Aero Consulting L.L.C',
         'address' => 'Bekim Fehmiu 2, Prishtinë, Kosovo',
         'uid'     => '812329557',
-    ],
-    'form' => [
-        'mail_to'   => 'info@your-domain.com',
-        'mail_from' => 'website@your-domain.com',
-        'success'   => 'Thank you. Your message has been sent — we will reply by email.',
-        'error'     => 'Sorry, your message could not be sent. Please check the fields and try again, or email us directly.',
     ],
     'privacy' => [
         'updated' => '2026-10-16',
@@ -87,13 +81,13 @@ Privacy contact: {email}
 
 ## What we collect
 
-When you use the contact form, we collect your name, email address and the message you write. When you email or call us, we receive the details you choose to share.
+This website has no contact form and does not ask you for personal data. When you email us, we receive your email address and the details you choose to share.
 
 Like any website, our hosting server keeps short technical logs (such as IP address, date and time, and pages requested) to keep the site secure and working.
 
 ## Why we use it
 
-- To reply to your enquiry and, if you ask, to discuss our services. The legal basis is the steps you ask us to take before a possible contract, and our legitimate interest in answering business enquiries.
+- To reply to your email and, if you ask, to discuss our services. The legal basis is the steps you ask us to take before a possible contract, and our legitimate interest in answering business enquiries.
 - To protect the website against spam and misuse. The legal basis is our legitimate interest in running a secure website.
 
 We do not use your data for marketing without your consent, and we do not sell it.
@@ -108,7 +102,7 @@ Your data is seen only by us and by the companies that host this website and our
 
 ## How long we keep it
 
-We keep enquiries for as long as needed to deal with them and for up to 12 months afterwards, unless they lead to a business relationship, in which case we keep them for as long as the law requires. Server logs are deleted automatically after a short period.
+We keep emails for as long as needed to deal with them and for up to 12 months afterwards, unless they lead to a business relationship, in which case we keep them for as long as the law requires. Server logs are deleted automatically after a short period.
 
 ## Your rights
 

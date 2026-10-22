@@ -156,12 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         go($tab);
     }
 
-    if ($action === 'delete_message') {
-        delete_message((string)($_POST['id'] ?? ''))
-            ? flash('ok', 'Message deleted.')
-            : flash('err', 'Could not delete the message.');
-        go('messages');
-    }
 
     if ($action === 'password') {
         $pw = (string)($_POST['new'] ?? '');
@@ -227,9 +221,8 @@ function form_close(): void
     echo '<div class="actions"><button class="btn" type="submit">Save and publish</button></div></form>';
 }
 
-$tabs = ['content' => 'Website text', 'privacy' => 'Privacy notice', 'messages' => 'Messages', 'settings' => 'Settings'];
+$tabs = ['content' => 'Website text', 'privacy' => 'Privacy notice', 'settings' => 'Settings'];
 $tab  = isset($tabs[$_GET['tab'] ?? '']) ? $_GET['tab'] : 'content';
-$messages = $loggedIn ? load_messages() : [];
 ?>
 <!doctype html>
 <html lang="en">
@@ -289,7 +282,7 @@ $messages = $loggedIn ? load_messages() : [];
 <?php else: ?>
   <nav class="tabs" aria-label="Sections">
     <?php foreach ($tabs as $key => $label): ?>
-      <a href="?tab=<?= e($key) ?>"<?= $key === $tab ? ' aria-current="page"' : '' ?>><?= e($label) ?><?php if ($key === 'messages' && $messages): ?> <span class="badge"><?= count($messages) ?></span><?php endif; ?></a>
+      <a href="?tab=<?= e($key) ?>"<?= $key === $tab ? ' aria-current="page"' : '' ?>><?= e($label) ?></a>
     <?php endforeach; ?>
   </nav>
 
@@ -369,10 +362,8 @@ $messages = $loggedIn ? load_messages() : [];
       <?php field($c, 'Address (shown on the page)', ['contact', 'address'], 'textarea'); ?>
       <div class="grid2">
         <?php field($c, 'Email (shown on the page)', ['contact', 'email'], 'email'); ?>
-        <?php field($c, 'Phone', ['contact', 'phone'], 'text', 'Example: +383 44 123 456'); ?>
+        <?php field($c, 'Phone (optional)', ['contact', 'phone'], 'text', 'Leave empty to hide the phone number on the website. Example: +383 44 123 456'); ?>
       </div>
-      <?php field($c, 'Message after sending', ['form', 'success']); ?>
-      <?php field($c, 'Message if sending fails', ['form', 'error']); ?>
     </section>
   <?php form_close(); endif; ?>
 
@@ -387,32 +378,6 @@ $messages = $loggedIn ? load_messages() : [];
     </section>
   <?php form_close(); endif; ?>
 
-  <?php if ($tab === 'messages'): ?>
-    <section class="card">
-      <h2>Messages from the contact form</h2>
-      <p class="hint">Messages are also emailed to <?= e($c['form']['mail_to']) ?>. Delete them once handled (privacy notice: kept up to 12 months).</p>
-      <?php if (!$messages): ?>
-        <p>No messages yet.</p>
-      <?php endif; ?>
-      <?php foreach ($messages as $m): ?>
-        <article class="msg">
-          <header>
-            <strong><?= e($m['name'] ?? '') ?></strong>
-            <a href="mailto:<?= e($m['email'] ?? '') ?>"><?= e($m['email'] ?? '') ?></a>
-            <time><?= e(date('j M Y, H:i', strtotime($m['date'] ?? '') ?: 0)) ?></time>
-          </header>
-          <p><?= lines($m['message'] ?? '') ?></p>
-          <form method="post" onsubmit="return confirm('Delete this message?')">
-            <input type="hidden" name="csrf" value="<?= e($_SESSION['csrf']) ?>">
-            <input type="hidden" name="id" value="<?= e($m['id']) ?>">
-            <a class="btn btn--small" href="mailto:<?= e($m['email'] ?? '') ?>?subject=<?= rawurlencode('Re: your enquiry') ?>">Reply</a>
-            <button class="link danger" name="action" value="delete_message">Delete</button>
-          </form>
-        </article>
-      <?php endforeach; ?>
-    </section>
-  <?php endif; ?>
-
   <?php if ($tab === 'settings'): ?>
     <?php form_open('settings'); ?>
       <section class="card">
@@ -426,11 +391,6 @@ $messages = $loggedIn ? load_messages() : [];
         <?php field($c, 'Company name', ['company', 'name']); ?>
         <?php field($c, 'Address (one line)', ['company', 'address']); ?>
         <?php field($c, 'Unique Identification Number', ['company', 'uid']); ?>
-      </section>
-      <section class="card">
-        <h2>Contact form email</h2>
-        <?php field($c, 'Send form messages to', ['form', 'mail_to'], 'email'); ?>
-        <?php field($c, 'Send from (an address on your domain)', ['form', 'mail_from'], 'email', 'Must be an address on your own domain, e.g. website@your-domain.com, or emails may land in spam.'); ?>
       </section>
     <?php form_close(); ?>
 

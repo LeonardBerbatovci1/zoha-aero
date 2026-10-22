@@ -1,4 +1,4 @@
-# Private runtime data: login, messages, saved content, rate limits
+# Private runtime data: login, messages, saved content
 data/*
 !data/.htaccess
 
